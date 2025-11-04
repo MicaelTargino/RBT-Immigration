@@ -79,6 +79,7 @@ body {
   letter-spacing: 0.5px;
   text-decoration: none;
   display: inline-block;
+  white-space: nowrap;
 }
 
 .btn-schedule:hover {
@@ -911,6 +912,12 @@ body {
   .mobile-menu-toggle {
     display: none;
   }
+
+  .btn-schedule {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.6rem;
+    letter-spacing: 0.3px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -920,6 +927,10 @@ body {
 
   .section-title {
     font-size: 2rem;
+  }
+
+  .contact-left .section-title {
+    font-size: 1.8rem !important;
   }
 
   .hero-subtitle,
