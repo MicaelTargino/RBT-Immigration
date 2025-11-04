@@ -43,34 +43,41 @@ contactForm.addEventListener("submit", (e) => {
     message: document.getElementById("message").value,
   }
 
-  // Create WhatsApp message
-  const whatsappMessage = `Olá, meu nome é *${formData.name}*.
+  // Build message (no manual encoding tweaks)
+  const whatsappMessage = `Olá! Meu nome é *${formData.name}*
 
-Entrei em contato através do site da RBT Immigration porque tenho interesse em seus serviços de consultoria de imigração.
+  Encontrei vocês pelo site da RBT Immigration e gostaria de saber mais sobre os serviços de consultoria de imigração.
 
-*Motivo do contato:*
-${formData.message}
+  *Meu objetivo nos EUA:*
+  ${formData.message}
 
-*Meus dados para contato:*
-E-mail: ${formData.email}
-WhatsApp: ${formData.whatsapp}
+  E-mail: ${formData.email}
+  WhatsApp: ${formData.whatsapp}
 
-Aguardo retorno. Obrigado!`
+  Aguardo o retorno de vocês!`;
 
-  // Encode message for URL
-  const encodedMessage = encodeURIComponent(whatsappMessage)
+  // Encode once
+  const encodedMessage = encodeURIComponent(whatsappMessage);
 
-  // Your WhatsApp number (remove + and spaces)
-  const whatsappNumber = "5583986146231"
+  // Your WhatsApp number (E.164, no + or spaces)
+  const whatsappNumber = "12035900986"; // company
+  // const whatsappNumber = "5583986146231"; // personal
+
+  // Prefer Web on desktop, API on mobile
+  const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+  const baseURL = "https://api.whatsapp.com/send"
+  // const baseURL = isMobile
+  //   ? "https://api.whatsapp.com/send"
+  //   : "https://web.whatsapp.com/send";
 
   // Create WhatsApp URL
-  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`
+  const whatsappURL = `${baseURL}?phone=${whatsappNumber}&text=${encodedMessage}`;
 
   // Open WhatsApp in new tab
-  window.open(whatsappURL, "_blank")
+  window.open(whatsappURL, "_blank", "noopener,noreferrer");
 
   // Show success message
-  alert("Obrigado pelo contato! Você será redirecionado para o WhatsApp.")
+  // alert("Obrigado pelo contato! Você será redirecionado para o WhatsApp.")
 
   // Reset form
   contactForm.reset()
@@ -243,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 })
 
-// Add scroll effect to header
+// Add scroll effect to header - hide on scroll down, show on scroll up
 let lastScroll = 0
 const header = document.querySelector(".header")
 
@@ -251,8 +258,10 @@ window.addEventListener("scroll", () => {
   const currentScroll = window.pageYOffset
 
   if (currentScroll > lastScroll && currentScroll > 100) {
+    // Scrolling down
     header.style.transform = "translateY(-100%)"
   } else {
+    // Scrolling up
     header.style.transform = "translateY(0)"
   }
 
