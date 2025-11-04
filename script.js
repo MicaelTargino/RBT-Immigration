@@ -47,14 +47,14 @@ contactForm.addEventListener("submit", (e) => {
   const whatsappMessage = `Olá! Meu nome é *${formData.name}*
 
   Encontrei vocês pelo site da RBT Immigration e gostaria de saber mais sobre os serviços de consultoria de imigração.
+  
+*Meu objetivo nos EUA:*
+${formData.message}
+  
+E-mail: ${formData.email}
+WhatsApp: ${formData.whatsapp}
 
-  *Meu objetivo nos EUA:*
-  ${formData.message}
-
-  E-mail: ${formData.email}
-  WhatsApp: ${formData.whatsapp}
-
-  Aguardo o retorno de vocês!`;
+Aguardo o retorno de vocês!`;
 
   // Encode once
   const encodedMessage = encodeURIComponent(whatsappMessage);
