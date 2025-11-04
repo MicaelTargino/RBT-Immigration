@@ -608,10 +608,11 @@ body {
 }
 
 .carousel-item img {
-  /* height: 650px; */
   width: auto;
   display: block;
   max-width: 100%;
+  max-height: 450px;
+  height: auto;
 }
 
 .carousel-btn {
