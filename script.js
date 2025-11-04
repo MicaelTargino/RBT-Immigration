@@ -20,9 +20,8 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     e.preventDefault()
     const target = document.querySelector(this.getAttribute("href"))
     if (target) {
-      const headerOffset = 80
       const elementPosition = target.getBoundingClientRect().top
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+      const offsetPosition = elementPosition + window.pageYOffset
 
       window.scrollTo({
         top: offsetPosition,
@@ -77,7 +76,7 @@ Aguardo retorno. Obrigado!`
   contactForm.reset()
 })
 
-// Schedule consultation button handler - scroll to bottom
+// Schedule consultation button handler - scroll to contact section
 document.addEventListener("DOMContentLoaded", () => {
   const scheduleButtons = document.querySelectorAll(".btn-schedule, .btn-primary")
   console.log("Found schedule buttons:", scheduleButtons.length)
@@ -86,13 +85,20 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(`Attaching listener to button ${index + 1}`)
     button.addEventListener("click", (e) => {
       e.preventDefault()
-      console.log("Scrolling to bottom...")
+      console.log("Scrolling to contact section...")
 
-      // Scroll to the very bottom of the page
-      window.scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: "smooth",
-      })
+      // Scroll to the contact section
+      const contactSection = document.querySelector("#contato")
+      if (contactSection) {
+        const headerOffset = 85
+        const elementPosition = contactSection.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        })
+      }
     })
   })
 })
