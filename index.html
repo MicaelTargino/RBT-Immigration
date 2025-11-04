@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RBT Immigration - Consultoria Especializada em Imigração</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body
@@ -18,11 +21,10 @@
                 <nav class="nav">
                     <a href="#inicio">Início</a>
                     <a href="#sobre">Sobre</a>
-                    <a href="#especializacoes">Especializações</a>
                     <a href="#servicos">Serviços</a>
                     <a href="#blog">Blog</a>
                     <a href="#contato" id="contato">Contato</a>
-                    <button class="btn-schedule">AGENDAR CONSULTA</button>
+                    <a href="#contato" class="btn-schedule" style="color:black; font-weight: 500">AGENDAR CONSULTA</a>
                 </nav>
                 <button class="mobile-menu-toggle" aria-label="Toggle menu">
                     <span></span>
@@ -39,7 +41,11 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <div class="stars-divider">
-                        <div class="line"></div>
+                        <div class="colored-lines">
+                            <div class="line-black"></div>
+                            <div class="line-white"></div>
+                            <div class="line-red"></div>
+                        </div>
                         <div class="stars">★ ★ ★ ★ ★</div>
                     </div>
                     <h1 class="hero-title">
@@ -49,7 +55,7 @@
                     <p class="hero-subtitle">
                         Consultoria especializada em imigração, análise personalizada, execução precisa e resultados reais para brasileiros que desejam viver nos EUA.
                     </p>
-                    <button class="btn-primary">Agendar avaliação de perfil gratuita</button>
+                    <a href="#contato" class="btn-primary">Agendar avaliação de perfil gratuita</a>
                     <div class="hero-features">
                         <div class="feature-item">
                             <img src="./square-check.svg" alt="Check" class="check-icon">
@@ -67,7 +73,7 @@
                 </div>
                 <div class="hero-image">
                     <!-- Using local Home.png file for Statue of Liberty -->
-                    <img src="./Home.png" alt="Statue of Liberty">
+                    <img src="./liberty_cropped.png" alt="Statue of Liberty">
                 </div>
             </div>
         </div>
@@ -82,7 +88,11 @@
                 </div>
                 <div class="about-text">
                     <div class="stars-divider">
-                        <div class="line"></div>
+                        <div class="colored-lines">
+                            <div class="line-black"></div>
+                            <div class="line-white"></div>
+                            <div class="line-red"></div>
+                        </div>
                         <div class="stars">★ ★ ★ ★ ★</div>
                     </div>
                     <h2 class="section-title">
@@ -117,8 +127,8 @@
                         ESPECIALIZAÇÕES QUE FAZEM A DIFERENÇA.
                     </h2>
                     <p class="specializations-subtitle">
-                        Seja na busca por residência permanente, negócios<br>
-                        ou reunificação familiar, oferecemos consultoria<br>
+                        Seja na busca por residência permanente, negócios
+                        ou reunificação familiar, <br> oferecemos consultoria
                         estratégica em todas as fases do processo migratório.
                     </p>
                 </div>
@@ -237,10 +247,34 @@
 
     <!-- Process Section -->
     <section class="process">
-        <div class="container">
-            <div class="process-image">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-Trpy4UMZE9zEj0yh5efXRRaBJl1kXQ.png" alt="Immigration process on mobile devices">
+        <div class="process-carousel">
+            <button class="carousel-btn carousel-btn-left">
+                <img src="./button_left.png" alt="Previous">
+            </button>
+
+            <div class="carousel-container">
+                <div class="carousel-track">
+                    <div class="carousel-item">
+                        <img src="./phone_final_tuned_1.png" alt="Case 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./phone_final_tuned_2.png" alt="Case 2">
+                    </div>
+                    <div class="carousel-item active">
+                        <img src="./phone_final_tuned_3.png" alt="Case 3">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./phone_final_tuned_4.png" alt="Case 4">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./phone_final_tuned_5.png" alt="Case 5">
+                    </div>
+                </div>
             </div>
+
+            <button class="carousel-btn carousel-btn-right">
+                <img src="./button_right.png" alt="Next">
+            </button>
         </div>
     </section>
 
@@ -263,7 +297,7 @@
             <div class="contact-content">
                 <div class="contact-left">
                     <h2 class="section-title" style="font-size:3.2rem;">
-                        VAMOS MOLDAR O SEU<br>
+                        VAMOS MOLDAR O SEU
                         PLANO PARA OS EUA.
                     </h2>
                     <p class="contact-description">
@@ -303,6 +337,6 @@
         
     </footer>
 
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
 </body>
 </html>

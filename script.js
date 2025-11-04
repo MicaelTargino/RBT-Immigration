@@ -77,21 +77,163 @@ Aguardo retorno. Obrigado!`
   contactForm.reset()
 })
 
-// Schedule consultation button handler
-const scheduleButtons = document.querySelectorAll(".btn-schedule, .btn-primary")
-scheduleButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const contactSection = document.getElementById("contato")
-    if (contactSection) {
-      const headerOffset = 80
-      const elementPosition = contactSection.getBoundingClientRect().top
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+// Schedule consultation button handler - scroll to bottom
+document.addEventListener("DOMContentLoaded", () => {
+  const scheduleButtons = document.querySelectorAll(".btn-schedule, .btn-primary")
+  console.log("Found schedule buttons:", scheduleButtons.length)
 
+  scheduleButtons.forEach((button, index) => {
+    console.log(`Attaching listener to button ${index + 1}`)
+    button.addEventListener("click", (e) => {
+      e.preventDefault()
+      console.log("Scrolling to bottom...")
+
+      // Scroll to the very bottom of the page
       window.scrollTo({
-        top: offsetPosition,
+        top: document.documentElement.scrollHeight,
         behavior: "smooth",
       })
+    })
+  })
+})
+
+// Carousel functionality
+document.addEventListener("DOMContentLoaded", () => {
+  const carouselTrack = document.querySelector(".carousel-track")
+  const carouselItems = Array.from(document.querySelectorAll(".carousel-item"))
+  const prevBtn = document.querySelector(".carousel-btn-left")
+  const nextBtn = document.querySelector(".carousel-btn-right")
+
+  if (!carouselTrack || carouselItems.length === 0) return
+
+  const totalOriginalItems = carouselItems.length
+
+  // Clone ALL items and add them to both sides for seamless infinite loop
+  const startClones = carouselItems.map(item => item.cloneNode(true))
+  const endClones = carouselItems.map(item => item.cloneNode(true))
+
+  // Add clones: [all clones] [original items] [all clones]
+  endClones.forEach(clone => carouselTrack.appendChild(clone))
+  startClones.reverse().forEach(clone => carouselTrack.insertBefore(clone, carouselTrack.firstChild))
+
+  // Get all items including clones
+  const allItems = Array.from(carouselTrack.querySelectorAll(".carousel-item"))
+
+  // Start at the first real item (after all start clones)
+  let currentIndex = totalOriginalItems
+  let isTransitioning = false
+
+  // Get responsive item width based on screen size
+  function getItemWidth() {
+    const screenWidth = window.innerWidth
+    if (screenWidth <= 768) {
+      // Mobile: 280px
+      return 280
+    } else if (screenWidth <= 1024) {
+      // Tablet: 220px
+      return 220
+    } else {
+      // Desktop: 280px
+      return 280
     }
+  }
+
+  function updateCarousel(animated = true) {
+    if (!animated) {
+      // Disable ALL transitions including item transitions
+      carouselTrack.style.transition = "none"
+      allItems.forEach(item => {
+        item.style.transition = "none"
+      })
+    } else {
+      carouselTrack.style.transition = "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)"
+      allItems.forEach(item => {
+        item.style.transition = "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)"
+      })
+    }
+
+    // Calculate the offset to center the active item
+    const itemWidth = getItemWidth()
+    const gap = 0
+    const itemTotalWidth = itemWidth + gap
+    const containerWidth = document.querySelector(".carousel-container").offsetWidth
+    const offset = -(currentIndex * itemTotalWidth) + (containerWidth / 2) - (itemWidth / 2)
+
+    carouselTrack.style.transform = `translateX(${offset}px)`
+
+    // Update classes for styling
+    allItems.forEach((item, index) => {
+      item.classList.remove("active", "adjacent")
+      const distance = Math.abs(index - currentIndex)
+
+      if (index === currentIndex) {
+        item.classList.add("active")
+      } else if (distance === 1) {
+        item.classList.add("adjacent")
+      }
+    })
+
+    if (!animated) {
+      // Force reflow to ensure transitions are disabled
+      void carouselTrack.offsetHeight
+      requestAnimationFrame(() => {
+        carouselTrack.style.transition = "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)"
+        allItems.forEach(item => {
+          item.style.transition = "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)"
+        })
+      })
+    }
+  }
+
+  function handleTransitionEnd() {
+    if (!isTransitioning) return
+
+    // Check if we need to loop back
+    if (currentIndex >= totalOriginalItems * 2) {
+      isTransitioning = false
+      currentIndex = totalOriginalItems
+      updateCarousel(false)
+    } else if (currentIndex < totalOriginalItems) {
+      isTransitioning = false
+      currentIndex = totalOriginalItems * 2 - 1
+      updateCarousel(false)
+    } else {
+      isTransitioning = false
+    }
+  }
+
+  // Listen for transition end
+  carouselTrack.addEventListener("transitionend", handleTransitionEnd)
+
+  function nextSlide() {
+    if (isTransitioning) return
+    isTransitioning = true
+    currentIndex++
+    updateCarousel(true)
+  }
+
+  function prevSlide() {
+    if (isTransitioning) return
+    isTransitioning = true
+    currentIndex--
+    updateCarousel(true)
+  }
+
+  if (prevBtn && nextBtn) {
+    prevBtn.addEventListener("click", prevSlide)
+    nextBtn.addEventListener("click", nextSlide)
+  }
+
+  // Initialize carousel
+  updateCarousel(false)
+
+  // Handle window resize for responsive behavior
+  let resizeTimeout
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimeout)
+    resizeTimeout = setTimeout(() => {
+      updateCarousel(false)
+    }, 150)
   })
 })
 
